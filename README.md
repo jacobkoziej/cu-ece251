@@ -1,5 +1,7 @@
 # cu-ece251
 
+> The Cooper Union - ECE 251: Computer Architecture
+
 
 ## Copyright & Licensing
 
