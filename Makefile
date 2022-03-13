@@ -18,7 +18,7 @@ AS = aarch64-linux-gnu-as
 CC = aarch64-linux-gnu-gcc
 LD = aarch64-linux-gnu-ld
 
-COMMON_FLAGS = -g
+COMMON_FLAGS = -g -Iinclude
 ASFLAGS = $(COMMON_FLAGS)
 CFLAGS  = $(COMMON_FLAGS)
 LDFLAGS = -lc -EL
