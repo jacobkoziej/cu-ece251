@@ -37,9 +37,11 @@ main:
 	cmp	w0, w9
 	b.lt	.Lmain_err
 
-	// convert argv[1] to an int
+	// convert argv[1] to an unsigned long
 	ldr	x0, [x1, 8]
-	bl	atoi
+	mov	x1, 0
+	mov	w2, 10
+	bl	strtoul
 
 	ldp	fp, lr, [sp], 16
 	mov	w0, 0
