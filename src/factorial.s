@@ -19,9 +19,42 @@
 .arch armv8-a
 
 .text
+.section .rodata
+
+.Lusage_fmtsrt:
+	.string	"usage: %s number\n"
+
+.text
 
 .global main
 .type   main, %function
 main:
+	stp	fp, lr, [sp, -16]!
+	mov	fp, sp
+
+	// factorial number is argv[1]
+	mov	w9, 2
+	cmp	w0, w9
+	b.lt	.Lmain_err
+
+	ldp	fp, lr, [sp], 16
 	mov	w0, 0
+	ret
+
+.Lmain_err:
+	// argv[0]
+	ldr	x2, [x1]
+
+	// FILE *stderr
+	adrp	x0, :got:stderr
+	ldr	x0, [x0, :got_lo12:stderr]
+	ldr	x0, [x0]
+
+	// format string
+	adrp	x1, .Lusage_fmtsrt
+	add	x1, x1, :lo12:.Lusage_fmtsrt
+	bl	fprintf
+
+	ldp	fp, lr, [sp], 16
+	mov	w0, 1
 	ret
