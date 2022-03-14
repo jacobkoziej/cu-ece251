@@ -37,6 +37,10 @@ main:
 	cmp	w0, w9
 	b.lt	.Lmain_err
 
+	// convert argv[1] to an int
+	ldr	x0, [x1, 8]
+	bl	atoi
+
 	ldp	fp, lr, [sp], 16
 	mov	w0, 0
 	ret
