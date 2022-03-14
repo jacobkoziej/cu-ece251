@@ -1,4 +1,3 @@
-# Makefile
 # Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,13 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-AS = aarch64-linux-gnu-as
-CC = aarch64-linux-gnu-gcc
-LD = aarch64-linux-gnu-ld
-
-COMMON_FLAGS = -g -Iinclude
-ASFLAGS = $(COMMON_FLAGS)
-CFLAGS  = $(COMMON_FLAGS)
-LDFLAGS = -lc -EL
-
-all:
+project(
+        'cu-ece251',
+        'c',
+        version : '0.0.0',
+        license : 'GPL-3.0-or-later',
+        default_options : [
+                'warning_level=3',
+                'cpp_std=c17',
+        ],
+)
