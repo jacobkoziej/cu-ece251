@@ -12,3 +12,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+factorial_sources = files(
+        'factorial.s',
+)
+
+
+executable(
+        'factorial',
+        sources : factorial_sources,
+)
