@@ -13,10 +13,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+bubble_sort_sources = files(
+        'bubble-sort.s',
+)
+
 factorial_sources = files(
         'factorial.s',
 )
 
+
+executable(
+        'bubble-sort',
+        sources : bubble_sort_sources,
+)
 
 executable(
         'factorial',
