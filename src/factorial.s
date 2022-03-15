@@ -1,5 +1,5 @@
 /*
- * factorial.s -- recursive factorial
+ * factorial.s -- iterative factorial
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,4 +63,29 @@ main:
 
 	ldp	fp, lr, [sp], 16
 	mov	w0, 1
+	ret
+
+
+.global factorial
+.type   factorial, %function
+factorial:
+	// 0! == 1
+	cmp	x0, 0
+	cinc	x0, x0, eq
+
+	// 1! == 1
+	cmp	x0, 1
+	b.eq	.Lfactorial_ret
+
+	mov	x9, x0
+
+.Lfactorial_loop:
+	sub	x9, x9, 1
+	mul	x0, x0, x9
+
+	// stopping at 2 avoids a multiplication by 1
+	cmp	x9, 2
+	b.gt	.Lfactorial_loop
+
+.Lfactorial_ret:
 	ret
