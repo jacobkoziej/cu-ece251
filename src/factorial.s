@@ -21,6 +21,9 @@
 .text
 .section .rodata
 
+.Loutput_fmtstr:
+	.string "%lu\n"
+
 .Lusage_fmtstr:
 	.string	"usage: %s number\n"
 
@@ -42,6 +45,13 @@ main:
 	mov	x1, 0
 	mov	w2, 10
 	bl	strtoul
+
+	// print factorial output
+	bl	factorial
+	mov	x1, x0
+	adrp	x0, .Loutput_fmtstr
+	add	x0, x0, :lo12:.Loutput_fmtstr
+	bl	printf
 
 	ldp	fp, lr, [sp], 16
 	mov	w0, 0
