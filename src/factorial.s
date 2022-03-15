@@ -21,7 +21,7 @@
 .text
 .section .rodata
 
-.Lusage_fmtsrt:
+.Lusage_fmtstr:
 	.string	"usage: %s number\n"
 
 .text
@@ -57,8 +57,8 @@ main:
 	ldr	x0, [x0]
 
 	// format string
-	adrp	x1, .Lusage_fmtsrt
-	add	x1, x1, :lo12:.Lusage_fmtsrt
+	adrp	x1, .Lusage_fmtstr
+	add	x1, x1, :lo12:.Lusage_fmtstr
 	bl	fprintf
 
 	ldp	fp, lr, [sp], 16
