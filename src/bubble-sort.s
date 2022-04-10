@@ -27,6 +27,15 @@ main:
 	ret
 
 
+// static int cmp_int(void *a, void *b);
+.type	cmp_int, %function
+cmp_int:
+	ldr	w0, [x0]
+	ldr	w1, [x1]
+	sub	w0, w0, w1
+	ret
+
+
 // void bubble_sort(void **x, size_t n, int (cmp*) (void *a, void *b));
 .global bubble_sort
 .type   bubble_sort, %function
