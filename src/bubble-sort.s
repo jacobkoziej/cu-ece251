@@ -25,3 +25,10 @@
 main:
 	mov	w0, 0
 	ret
+
+
+// void bubble_sort(void **x, size_t n, int (cmp*) (void *a, void *b));
+.global bubble_sort
+.type   bubble_sort, %function
+bubble_sort:
+	ret
