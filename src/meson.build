@@ -24,6 +24,7 @@ factorial_sources = files(
 
 executable(
         'bubble-sort',
+        include_directories : cu_ece251_incdir,
         sources : bubble_sort_sources,
 )
 
