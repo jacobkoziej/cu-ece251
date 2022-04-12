@@ -111,6 +111,9 @@ gen_rand_int_arr:
 	cmp	x19, x20
 	b.lt	.Lgen_rand_int_arr_loop
 
+	// restore pointer array
+	mov	x0, x22
+
 	ldp	x23, x24, [sp], 16
 	ldp	x21, x22, [sp], 16
 
