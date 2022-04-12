@@ -45,7 +45,13 @@ main:
 	mov	w2, 10
 	bl	strtoul
 
+	stp	x19, x20, [sp, -16]!
+	mov	x19, x0
 	bl	gen_rand_int_arr
+
+	mov	x1, x19
+	bl	free_rand_int_arr
+	ldp	x19, x20, [sp], 16
 
 	ldp	fp, lr, [sp], 16
 	mov	w0, 0
@@ -134,6 +140,37 @@ gen_rand_int_arr:
 	mov	x0, NULL
 	ldp	x19, x20, [sp], 16
 	ldp	fp, lr, [sp], 16
+	ret
+
+
+// static void gen_rand_int_arr(int **arr, size_t nmemb);
+.type	free_rand_int_arr, %function
+free_rand_int_arr:
+	// can't free zero elements
+	cbz	x1, .Lfree_rand_int_arr_ret
+
+	stp	lr, fp, [sp, -16]!
+	mov	fp, sp
+	stp	x19, x20, [sp, -16]!
+	stp	x21, x22, [sp, -16]!
+
+	mov	x19, x0
+	mov	x20, x0
+	mov	x21, x1
+.Lfree_rand_int_arr_loop:
+	ldr	x0, [x19], 8
+	bl	free
+
+	sub	x21, x21, 1
+	cbz	x21, .Lfree_rand_int_arr_loop
+
+	mov	x0, x20
+	bl	free
+
+	ldp	x21, x22, [sp], 16
+	ldp	x19, x20, [sp], 16
+	ldp	lr, fp, [sp], 16
+.Lfree_rand_int_arr_ret:
 	ret
 
 
