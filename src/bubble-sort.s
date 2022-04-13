@@ -174,7 +174,7 @@ free_rand_int_arr:
 	ret
 
 
-// static int cmp_int(void *a, void *b);
+// static int cmp_int(const void *a, const void *b);
 .type	cmp_int, %function
 cmp_int:
 	ldr	w0, [x0]
@@ -183,7 +183,7 @@ cmp_int:
 	ret
 
 
-// void bubble_sort(void **x, size_t n, int (cmp*) (void *a, void *b));
+// void bubble_sort(void **x, size_t n, int (cmp*) (const void *a, const void *b));
 .global bubble_sort
 .type   bubble_sort, %function
 bubble_sort:
