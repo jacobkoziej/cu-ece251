@@ -26,6 +26,9 @@
 .Lusage_fmtstr:
 	.string	"usage: %s array_size\n"
 
+.Lint_fmtstr:
+	.string "%d\n"
+
 .text
 
 .global main
@@ -49,6 +52,10 @@ main:
 	mov	x20, x0
 	bl	gen_rand_int_arr
 	mov	x19, x0
+
+	mov	x0, x19
+	mov	x1, x20
+	bl	print_rand_int_arr
 
 	stp	x21, x22, [sp, -16]!
 	bl	clock
@@ -187,6 +194,36 @@ free_rand_int_arr:
 	ldp	x19, x20, [sp], 16
 	ldp	lr, fp, [sp], 16
 .Lfree_rand_int_arr_ret:
+	ret
+
+
+// static void print_rand_int_arr(const void **x, size_t n);
+.type	print_rand_int_arr, %function
+print_rand_int_arr:
+	cbz	x1, .Lprint_rand_int_arr_ret
+
+	stp	lr, fp, [sp, -16]!
+	mov	fp, sp
+	stp	x19, x20, [sp, -16]!
+	mov	x19, x0
+	mov	x20, x1
+	stp	x21, x22, [sp, -16]!
+
+	adrp	x21, .Lint_fmtstr
+	add	x21, x21, :lo12:.Lint_fmtstr
+
+.Lprint_rand_int_arr_loop:
+	mov	x0, x21
+	ldr	x1, [x19], 8
+	ldr	w1, [x1]
+	bl	printf
+	sub	x20, x20, 1
+	cbnz	x20, .Lprint_rand_int_arr_loop
+
+	ldp	x21, x22, [sp], 16
+	ldp	x19, x20, [sp], 16
+	ldp	lr, fp, [sp], 16
+.Lprint_rand_int_arr_ret:
 	ret
 
 
