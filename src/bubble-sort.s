@@ -26,6 +26,9 @@
 .Lusage_fmtstr:
 	.string	"usage: %s array_size\n"
 
+.Lempty_arrstr:
+	.string	"array size must be a valid integer greater than zero\n"
+
 .Lgen_rand_int_arr_errstr:
 	.string	"failed to allocate random integer array\n"
 
@@ -59,6 +62,7 @@ main:
 	mov	x1, 0
 	mov	w2, 10
 	bl	strtoul
+	cbz	x0, .Lmain_empty_arr_err
 
 	// generate a random integer array
 	stp	x19, x20, [sp, -16]!
@@ -136,6 +140,21 @@ main:
 	// format string
 	adrp	x1, .Lusage_fmtstr
 	add	x1, x1, :lo12:.Lusage_fmtstr
+	bl	fprintf
+
+	ldp	fp, lr, [sp], 16
+	mov	w0, 1
+	ret
+
+.Lmain_empty_arr_err:
+	// FILE *stderr
+	adrp	x0, :got:stderr
+	ldr	x0, [x0, :got_lo12:stderr]
+	ldr	x0, [x0]
+
+	// format string
+	adrp	x1, .Lempty_arrstr
+	add	x1, x1, :lo12:.Lempty_arrstr
 	bl	fprintf
 
 	ldp	fp, lr, [sp], 16
