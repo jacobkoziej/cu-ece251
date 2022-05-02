@@ -280,4 +280,61 @@ cmp_int:
 .global bubble_sort
 .type   bubble_sort, %function
 bubble_sort:
+	cbz	x1, .Lbubble_sort_ret
+
+	// we only need to sort up to n - 1
+	sub	x1, x1, 1
+	cbz	x1, .Lbubble_sort_ret
+
+	stp	lr, fp, [sp, -16]!
+	mov	fp, sp
+	stp	x19, x20, [sp, -16]!
+	stp	x21, x22, [sp, -16]!
+	stp	x23, x24, [sp, -16]!
+
+	// backup x, cmp, and n
+	mov	x19, x0
+	mov	x20, x1
+	mov	x21, x2
+
+.Lbubble_sort_loop:
+	// sub loop counter
+	mov	x22, x20
+
+	// keep track if we've swapped anything
+	mov	x23, 0
+
+	// our temporary pointer
+	mov	x24, x19
+
+.Lbubble_sort_subloop:
+	ldr	x0, [x24]
+	ldr	x1, [x24, 8]!
+	blr	x21
+
+	mov	w1, 0
+	cmp	w0, w1
+	b.le	.Lbubble_sort_no_swap
+
+	mov	x23, 1
+	ldr	x0, [x24, -8]
+	ldr	x1, [x24]
+	str	x0, [x24]
+	str	x1, [x24, -8]
+
+.Lbubble_sort_no_swap:
+	sub	x22, x22, 1
+	cbnz	x22, .Lbubble_sort_subloop
+
+	cbz	x23, .Lbubble_sort_done
+
+	sub	x20, x20, 1
+	cbnz	x20, .Lbubble_sort_loop
+
+.Lbubble_sort_done:
+	ldp	x23, x24, [sp], 16
+	ldp	x21, x22, [sp], 16
+	ldp	x19, x20, [sp], 16
+	ldp	lr, fp, [sp], 16
+.Lbubble_sort_ret:
 	ret
