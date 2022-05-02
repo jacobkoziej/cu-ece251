@@ -26,6 +26,9 @@
 .Lusage_fmtstr:
 	.string	"usage: %s array_size\n"
 
+.Lgen_rand_int_arr_errstr:
+	.string	"failed to allocate random integer array\n"
+
 .Lint_sort_beginstr:
 	.string "sorting %d integers\n"
 
@@ -61,6 +64,7 @@ main:
 	stp	x19, x20, [sp, -16]!
 	mov	x20, x0
 	bl	gen_rand_int_arr
+	cbz	x0, .Lmain_gen_rand_int_arr_err
 	mov	x19, x0
 
 	adrp	x0, .Lint_sort_beginstr
@@ -134,6 +138,21 @@ main:
 	add	x1, x1, :lo12:.Lusage_fmtstr
 	bl	fprintf
 
+	ldp	fp, lr, [sp], 16
+	mov	w0, 1
+	ret
+
+.Lmain_gen_rand_int_arr_err:
+	// FILE *stderr
+	adrp	x0, :got:stderr
+	ldr	x0, [x0, :got_lo12:stderr]
+	ldr	x0, [x0]
+
+	adrp	x1, .Lgen_rand_int_arr_errstr
+	add	x1, x1, :lo12:.Lgen_rand_int_arr_errstr
+	bl	fprintf
+
+	ldp	x19, x20, [sp], 16
 	ldp	fp, lr, [sp], 16
 	mov	w0, 1
 	ret
