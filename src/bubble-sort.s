@@ -130,8 +130,8 @@ gen_rand_int_arr:
 	str	x23, [x21], 8
 
 	add	x20, x20, 1
-	cmp	x19, x20
-	b.lt	.Lgen_rand_int_arr_loop
+	cmp	x20, x19
+	b.lo	.Lgen_rand_int_arr_loop
 
 	// restore pointer array
 	mov	x0, x22
