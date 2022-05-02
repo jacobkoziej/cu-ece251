@@ -57,6 +57,7 @@ main:
 	mov	w2, 10
 	bl	strtoul
 
+	// generate a random integer array
 	stp	x19, x20, [sp, -16]!
 	mov	x20, x0
 	bl	gen_rand_int_arr
@@ -79,6 +80,7 @@ main:
 	add	x0, x0, :lo12:.Lborderstr
 	bl	puts
 
+	// get CPU time before sorting
 	stp	x21, x22, [sp, -16]!
 	bl	clock
 	mov	x21, x0
@@ -89,6 +91,7 @@ main:
 	add	x2, x2, :lo12:cmp_int
 	bl	bubble_sort
 
+	// get CPU time after sorting
 	bl	clock
 	mov	x22, x0
 
@@ -107,6 +110,7 @@ main:
 	bl	printf
 	ldp	x21, x22, [sp], 16
 
+	// free the generated integer array
 	mov	x0, x19
 	mov	x1, x20
 	bl	free_rand_int_arr
