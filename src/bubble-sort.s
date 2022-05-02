@@ -142,6 +142,9 @@ main:
 // static int **gen_rand_int_arr(size_t nmemb);
 .type	gen_rand_int_arr, %function
 gen_rand_int_arr:
+	// return NULL if nmemb is zero
+	cbz	x0, .Lgen_rand_int_arr_ret
+
 	stp	fp, lr, [sp, -16]!
 	mov	fp, sp
 	stp	x19, x20, [sp, -16]!
@@ -152,7 +155,7 @@ gen_rand_int_arr:
 	// generate pointer array
 	mov	x1, 8
 	bl	calloc
-	cbz	x0, .Lgen_rand_int_arr_ret
+	cbz	x0, .Lgen_rand_int_arr_calloc_ret
 
 	stp	x21, x22, [sp, -16]!
 	stp	x23, x24, [sp, -16]!
@@ -186,9 +189,10 @@ gen_rand_int_arr:
 	ldp	x23, x24, [sp], 16
 	ldp	x21, x22, [sp], 16
 
-.Lgen_rand_int_arr_ret:
+.Lgen_rand_int_arr_calloc_ret:
 	ldp	x19, x20, [sp], 16
 	ldp	fp, lr, [sp], 16
+.Lgen_rand_int_arr_ret:
 	ret
 
 .Lgen_rand_int_arr_err:
