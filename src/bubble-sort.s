@@ -26,6 +26,15 @@
 .Lusage_fmtstr:
 	.string	"usage: %s array_size\n"
 
+.Lint_sort_beginstr:
+	.string "sorting %d integers\n"
+
+.Lborderstr:
+	.string "================"
+
+.Lint_sort_donestr:
+	.string "sorted %d integers in %ld clock cycles\n"
+
 .Lint_fmtstr:
 	.string "%d\n"
 
@@ -53,9 +62,22 @@ main:
 	bl	gen_rand_int_arr
 	mov	x19, x0
 
+	adrp	x0, .Lint_sort_beginstr
+	add	x0, x0, :lo12:.Lint_sort_beginstr
+	mov	x1, x20
+	bl	printf
+
+	adrp	x0, .Lborderstr
+	add	x0, x0, :lo12:.Lborderstr
+	bl	puts
+
 	mov	x0, x19
 	mov	x1, x20
 	bl	print_rand_int_arr
+
+	adrp	x0, .Lborderstr
+	add	x0, x0, :lo12:.Lborderstr
+	bl	puts
 
 	stp	x21, x22, [sp, -16]!
 	bl	clock
@@ -69,6 +91,20 @@ main:
 
 	bl	clock
 	mov	x22, x0
+
+	mov	x0, x19
+	mov	x1, x20
+	bl	print_rand_int_arr
+
+	adrp	x0, .Lborderstr
+	add	x0, x0, :lo12:.Lborderstr
+	bl	puts
+
+	adrp	x0, .Lint_sort_donestr
+	add	x0, x0, :lo12:.Lint_sort_donestr
+	mov	x1, x20
+	sub	x2, x22, x21
+	bl	printf
 	ldp	x21, x22, [sp], 16
 
 	mov	x0, x19
