@@ -159,7 +159,7 @@ gen_rand_int_arr:
 	ret
 
 
-// static void gen_rand_int_arr(int **arr, size_t nmemb);
+// static void free_rand_int_arr(int **arr, size_t nmemb);
 .type	free_rand_int_arr, %function
 free_rand_int_arr:
 	// can't free zero elements
