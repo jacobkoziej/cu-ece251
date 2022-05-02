@@ -132,12 +132,9 @@ main:
 	// argv[0]
 	ldr	x2, [x1]
 
-	// FILE *stderr
 	adrp	x0, :got:stderr
 	ldr	x0, [x0, :got_lo12:stderr]
 	ldr	x0, [x0]
-
-	// format string
 	adrp	x1, .Lusage_fmtstr
 	add	x1, x1, :lo12:.Lusage_fmtstr
 	bl	fprintf
@@ -147,12 +144,9 @@ main:
 	ret
 
 .Lmain_empty_arr_err:
-	// FILE *stderr
 	adrp	x0, :got:stderr
 	ldr	x0, [x0, :got_lo12:stderr]
 	ldr	x0, [x0]
-
-	// format string
 	adrp	x1, .Lempty_arrstr
 	add	x1, x1, :lo12:.Lempty_arrstr
 	bl	fprintf
@@ -162,11 +156,9 @@ main:
 	ret
 
 .Lmain_gen_rand_int_arr_err:
-	// FILE *stderr
 	adrp	x0, :got:stderr
 	ldr	x0, [x0, :got_lo12:stderr]
 	ldr	x0, [x0]
-
 	adrp	x1, .Lgen_rand_int_arr_errstr
 	add	x1, x1, :lo12:.Lgen_rand_int_arr_errstr
 	bl	fprintf
