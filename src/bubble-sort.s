@@ -46,10 +46,18 @@ main:
 	bl	strtoul
 
 	stp	x19, x20, [sp, -16]!
-	mov	x19, x0
+	mov	x20, x0
 	bl	gen_rand_int_arr
+	mov	x19, x0
 
-	mov	x1, x19
+	mov	x0, x19
+	mov	x1, x20
+	adrp	x2, cmp_int
+	add	x2, x2, :lo12:cmp_int
+	bl	bubble_sort
+
+	mov	x0, x19
+	mov	x1, x20
 	bl	free_rand_int_arr
 	ldp	x19, x20, [sp], 16
 
