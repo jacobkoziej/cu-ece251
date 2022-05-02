@@ -50,11 +50,19 @@ main:
 	bl	gen_rand_int_arr
 	mov	x19, x0
 
+	stp	x21, x22, [sp, -16]!
+	bl	clock
+	mov	x21, x0
+
 	mov	x0, x19
 	mov	x1, x20
 	adrp	x2, cmp_int
 	add	x2, x2, :lo12:cmp_int
 	bl	bubble_sort
+
+	bl	clock
+	mov	x22, x0
+	ldp	x21, x22, [sp], 16
 
 	mov	x0, x19
 	mov	x1, x20
